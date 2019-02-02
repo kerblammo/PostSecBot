@@ -50,7 +50,7 @@ Coming soon!
 
 * **Peter Adam** - *Initial work* - [Kerblammo](https://github.com/PurpleBooth)
 
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+See also the list of [contributors](https://github.com/PostSecBot/contributors) who participated in this project.
 
 ## License
 
