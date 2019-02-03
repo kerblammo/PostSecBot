@@ -4,5 +4,8 @@
   "description": "A Discord bot designed with post-secondary students in mind",
   "main": "app.js",
   "author": "Peter Adam",
-  "dependencies": {}
+  "dependencies": {
+    "discord.io": "^2.5.3",
+    "winston": "^3.2.1"
+  }
 }
