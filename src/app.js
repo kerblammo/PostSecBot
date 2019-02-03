@@ -4,7 +4,8 @@ var auth = require('./auth.json');
 var fs = require('fs');
 
 var global = {
-    "users" : null
+    "users" : null,
+    "commands": null
 };
 
 //start the application
@@ -27,15 +28,20 @@ var bot = new Discord.Client({
     autorun: true
  });
 
-//log message when bot is ready
+//actions to perform when bot is ready
 bot.on('ready', function (evt) {
-    logger.info('Connected');
-    logger.info('Logged in as: ');
-    logger.info(bot.username + ' - (' + bot.id + ')');
+    
 
     //get all users who have sent messages
     global.users = JSON.parse(fs.readFileSync("users.json", "utf8"));
-    console.log(global.users);
+    
+    //get all commands and associated permissions
+    global.commands = JSON.parse(fs.readFileSync("commands.json"));
+    
+    //log ready message
+    logger.info('Connected');
+    logger.info('Logged in as: ');
+    logger.info(bot.username + ' - (' + bot.id + ')');
 });
 
 //receive a command
@@ -148,13 +154,9 @@ function handleDebugCommand(args, user, userID, channelID, message){
         || args.includes('info')
         || args.includes('?')){
         //no recognized command found
-        response = ("**DEBUG**\nPrints information about the message received. Supply one or more arguments to specify the data you would like to see. Arguments include:\n"
-        + "*user* - Prints the username of the messenger\n"
-        + "*userID* - prints the identifying number of the messenger\n"
-        + "*channel* - prints the identifying number of the channel the message was sent to\n"
-        + "*full* - performs all above commands");
+        response = formatHelpMessage(global.commands.debug);
     } else if (!executed){
-        response = ("Error: unrecognized command structure. Try `debug help` for more information.");
+        response = formatBadCommandMessage('debug');
     }
     logger.info(response);
     bot.sendMessage({
@@ -187,14 +189,49 @@ function handleVardumpCommand(args, user, userID, channelID){
     } else if (args.includes("help")
     ||args.includes("info")
     ||args.includes("?")){
-        response = ("**VARDUMP**\nPrints information about a variable in bot's memory. Supply one argument to specify the data you would like to see. Arguments include:\n" 
-        + "*users* - Prints the username and ID of all users bot has read messages from");
+        response = formatHelpMessage(global.commands.vardump);
     } else {
-        response = ("Error: unrecognized command structure. Try `vardump help` for more information.");
+        response = formatBadCommandMessage('vardump');
     }
     logger.info(response);
     bot.sendMessage({
         to: channelID,
         message: response
     });
+}
+
+/**
+ * Formats a command into a readable string. Uses discord markdown
+ * Last updated: 2019-02-03
+ * @author Peter Adam <padamckb@hotmail.com>
+ * @param {object} command The command to be formatted
+ * @returns {string} A formatted help message
+ */
+function formatHelpMessage(command){
+    //name and description
+    var output = "**" + command.name.toUpperCase() + "**\n";
+    output += command.description + "\n";
+
+    //argument descriptions
+    if (command.args.length > 0){
+        output += "Arguments include:\n";
+        for (var i = 0; i < command.args.length; i++){
+            var arg = command.args[i];
+            output += "*" + arg.name + "* - " + arg.description + "\n";
+        }
+    }
+
+    return output;
+
+}
+
+/**
+ * Formats an error message for a command suggesting the user use the help argument
+ * Last Updated: 2019-02-03
+ * @author Peter Adam <padamckb@hotmail.com>
+ * @param {string} name The name of the command
+ * @returns {string} Formatted error message 
+ */
+function formatBadCommandMessage(name){
+    return "Error: unrecognized command structure. Try `" + name + " help` for more information.";
 }
