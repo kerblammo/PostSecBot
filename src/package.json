@@ -1,0 +1,8 @@
+{
+  "name": "PostSecBot",
+  "version": "1.0.0",
+  "description": "A Discord bot designed with post-secondary students in mind",
+  "main": "app.js",
+  "author": "Peter Adam",
+  "dependencies": {}
+}

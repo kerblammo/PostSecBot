@@ -17,17 +17,13 @@ What things you need to install the software and how to install them
 
 ### Installing
 
-Coming soon!
+To begin, you will need to clone your branch and download dependencies. If you already have Node installed, navigate to the src directory and run the command:
+```
+npm install discord.io winston -save
+```
+After installing dependencies, you must change src/auth.json to include your Discord token. If you don't know what your Discord token is, [this site](https://www.digitaltrends.com/gaming/how-to-make-a-discord-bot/) has a great tutorial.
 
 ## Running the tests
-
-Coming soon!
-
-### Break down into end to end tests
-
-Coming soon!
-
-### And coding style tests
 
 Coming soon!
 
@@ -48,7 +44,7 @@ Coming soon!
 
 ## Authors
 
-* **Peter Adam** - *Initial work* - [Kerblammo](https://github.com/PurpleBooth)
+* **Peter Adam** - *Initial work* - [Kerblammo](https://github.com/kerblammo)
 
 See also the list of [contributors](https://github.com/kerblammo/PostSecBot/contributors) who participated in this project.
 
@@ -59,4 +55,5 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 ## Acknowledgments
 
 * [Billie Thompson](https://github.com/PurpleBooth) for writing a [this](https://gist.github.com/PurpleBooth/109311bb0361f32d87a2) fabulous ReadMe template
+* [Phil Hornshaw](https://www.digitaltrends.com/users/phornshaw/) for his tutorial on digitaltrends.com that helped create my first bot
 * Mom
