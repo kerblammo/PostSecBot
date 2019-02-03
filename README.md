@@ -17,9 +17,10 @@ What things you need to install the software and how to install them
 
 ### Installing
 
-To begin, you will need to clone your branch and download dependencies. If you already have Node installed, navigate to the src directory and run the command:
+To begin, you will need to clone your branch and download dependencies. If you already have Node installed, navigate to the src directory and run the commands:
 ```
 npm install discord.io winston -save
+npm install https://github.com/woor/discord.io/tarball/gateway_v6
 ```
 After installing dependencies, you must change src/auth.json to include your Discord token. If you don't know what your Discord token is, [this site](https://www.digitaltrends.com/gaming/how-to-make-a-discord-bot/) has a great tutorial.
 
