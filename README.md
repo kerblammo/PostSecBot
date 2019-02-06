@@ -37,6 +37,8 @@ After installing dependencies, you must make your Discord token available to the
 }
  ```
 
+ Once again inside *src* directory, you will need to update *owner.json* to include your username and id number. To get your id number, activate developer mode in discord (Settings > Appearance > Developer Mode) then right click on your profile and select 'Copy ID'. 
+
  Note that when making changes to your branch, you **never** want to copy your bot token or the contents of users.
 
  To run the bot, navigate to the open a shell in the *src* directory and run the command:

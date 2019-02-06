@@ -42,6 +42,34 @@ bot.on('ready', function (evt) {
     //get all commands and associated permissions
     global.commands = JSON.parse(fs.readFileSync("commands.json"));
 
+    //check if owner is on whitelists
+    fs.readFile("owner.json", "utf8", function(err,data){
+        if (err){
+            logger.error(err);
+        } else {
+            var owner = JSON.parse(data);
+            if (!owner.imported){
+                addToPermissionList(global.commands.global, owner.profile, "white");
+                fs.writeFile('commands.json', JSON.stringify(global.commands), function(err){
+                    if (err){
+                        logger.info(err);
+                    } else {
+                        console.log('file written');
+                        owner.imported = true;
+                        fs.writeFile('owner.json', JSON.stringify(owner), function(err){
+                            if (err){
+                                logger.info(err);
+                            } else{ 
+                                console.log('owner file updated');
+                            }
+                        })
+                    }
+                })
+                logger.info("Server admin added to whitelists");
+            }
+        }
+    })
+
     //log ready message
     logger.info('Connected');
     logger.info('Logged in as: ');
@@ -309,7 +337,7 @@ function isCommandPermittedByUser(command, userID, mode = command.mode) {
 /**
  * Adds a user to a command's permission list. Adding a user to a list affects all children of that list as well
  * If the command is 'global' then permissions are updated for all commands
- * Last update: 2019-02-05
+ * Last update: 2019-02-06
  * @author Peter Adam <padamckb@hotmail.com>
  * @param {Object} command The command to have permissions modified
  * @param {string} command.name The name of the command
@@ -321,19 +349,21 @@ function isCommandPermittedByUser(command, userID, mode = command.mode) {
  * @param {string} mode "white" for whitelist or "black" for blacklist
  */
 function addToPermissionList(command, user, mode){
-    //construct object
+     
+     
     if (command.name === "global"){
-        if (mode==="white"){
+        if (mode==="white"){ 
             command.whitelist.push(user);
         } else {
             command.blacklist.push(user);
         }
         for (var cmd in global.commands){
             //add to every list
-            if (cmd.name === "global"){
+            if (cmd === "global"){
+                console.log('global');
                 continue;
-            }
-            addToPermissionList(cmd, user, mode);
+            } 
+            addToPermissionList(global.commands[cmd], user, mode);
         }
     } else {
         //add to list
