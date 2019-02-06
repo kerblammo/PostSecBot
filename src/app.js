@@ -49,13 +49,17 @@ bot.on('ready', function (evt) {
         } else {
             var owner = JSON.parse(data);
             if (!owner.imported){
+                //owner has not been imported yet
                 addToPermissionList(global.commands.global, owner.profile, "white");
+                
+                //save new commands with updated whitelist
                 fs.writeFile('commands.json', JSON.stringify(global.commands), function(err){
                     if (err){
                         logger.info(err);
-                    } else {
-                        console.log('file written');
+                    } else { 
                         owner.imported = true;
+                        
+                        //overwrite owner file to prevent importing again at next launch
                         fs.writeFile('owner.json', JSON.stringify(owner), function(err){
                             if (err){
                                 logger.info(err);
