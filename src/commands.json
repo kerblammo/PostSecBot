@@ -1,39 +1,75 @@
 {
     "global": {
+        "name": "global",
         "whitelist": [],
         "blacklist": []
+    },
+    "whitelist": {
+        "name": "whitelist",
+        "mode": "white",
+        "description": "Modify whitelist permissions for a command. Choose the command type, and supply the username and ID of the user whose privileges must be modified",
+        "whitelist": [],
+        "blacklist": [],
+        "args": [
+            {
+                "name": "add",
+                "mode": "white",
+                "description": "Add a user to the whitelist for this command. Applies to the children of this command.",
+                "whitelist": [],
+                "blacklist": []
+            },
+            {
+                "name": "remove",
+                "mode": "white",
+                "description": "Remove a user from the whitelist for this command. Applies to the parents of this command.",
+                "whitelist": [],
+                "blacklist": []
+            },
+            {
+                "name": "cmds",
+                "mode": "white",
+                "description": "List all commands currently in whitelist mode.",
+                "whitelist": [],
+                "blacklist": []
+            }
+        ]
     },
     "debug": {
         "name": "debug",
         "mode": "black",
         "description": "Prints information about the message received. Supply one or more arguments to specify the data you would like to see.",
-        "whitelist" : [],
-        "blacklist" : [],
-        "args": [{
-            "name": "full",
-            "mode": "black",
-            "description": "Performs all above commands",
-            "whitelist": [],
-            "blacklist": []
-        }, {
-            "name": "user",
-            "mode": "black",
-            "description": "Prints the username of the messenger",
-            "whitelist": [],
-            "blacklist": []
-        },{
-            "name": "userID",
-            "mode": "black",
-            "description": "Prints the identifying number of the messenger",
-            "whitelist": [],
-            "blacklist": []
-        }, {
-            "name": "channel",
-            "mode": "black",
-            "description": "Prints the identifying number of the channel the message was sent to",
-            "whitelist": [],
-            "blacklist": []
-        }]
+        "whitelist": [],
+        "blacklist": [],
+        "args": [
+            {
+                "name": "full",
+                "mode": "black",
+                "description": "Performs all above commands",
+                "whitelist": [],
+                "blacklist": []
+            },
+            {
+                "name": "user",
+                "mode": "black",
+                "description": "Prints the username of the messenger",
+                "whitelist": [],
+                "blacklist": []
+            },
+            {
+                "name": "userID",
+                "mode": "black",
+                "description": "Prints the identifying number of the messenger",
+                "whitelist": [],
+                "blacklist": []
+            },
+            {
+                "name": "channel",
+                "mode": "black",
+                "description": "Prints the identifying number of the channel the message was sent to",
+                "whitelist": [],
+                "blacklist": []
+            }
+        ]
     },
     "vardump": {
         "name": "vardump",
@@ -41,13 +77,14 @@
         "description": "Prints information about a variable in bot's memory. Supply one argument to specify the data you would like to see.",
         "whitelist": [],
         "blacklist": [],
-        "args": [{
-            "name": "users",
-            "mode": "white",
-            "description": "Prints the username and ID of all users bot has read messages from",
-            "whitelist": [],
-            "blacklist": []
-            }]
+        "args": [
+            {
+                "name": "users",
+                "mode": "white",
+                "description": "Prints the username and ID of all users bot has read messages from",
+                "whitelist": [],
+                "blacklist": []
+            }
+        ]
     }
-    
 }

@@ -305,3 +305,49 @@ function isCommandPermittedByUser(command, userID, mode = command.mode) {
     }
     return permitted;
 }
+
+/**
+ * Adds a user to a command's permission list. Adding a user to a list affects all children of that list as well
+ * If the command is 'global' then permissions are updated for all commands
+ * Last update: 2019-02-05
+ * @author Peter Adam <padamckb@hotmail.com>
+ * @param {Object} command The command to have permissions modified
+ * @param {string} command.name The name of the command
+ * @param {Object[]} command.whitelist The whitelist of this command
+ * @param {Object[]} command.blacklist The blacklist of this command
+ * @param {Object} user The user to add a record of
+ * @param {string} user.user The user's name
+ * @param {string} user.userID The user's unique identifier
+ * @param {string} mode "white" for whitelist or "black" for blacklist
+ */
+function addToPermissionList(command, user, mode){
+    //construct object
+    if (command.name === "global"){
+        if (mode==="white"){
+            command.whitelist.push(user);
+        } else {
+            command.blacklist.push(user);
+        }
+        for (var cmd in global.commands){
+            //add to every list
+            if (cmd.name === "global"){
+                continue;
+            }
+            addToPermissionList(cmd, user, mode);
+        }
+    } else {
+        //add to list
+        if (mode==="white"){
+            command.whitelist.push(user);
+        } else {
+            command.blacklist.push(user);
+        }
+        if (typeof command.args !== "undefined"){
+            for (var i = 0; i < command.args.length; i++){
+                //add to child lists
+                addToPermissionList(command.args[i], user, mode);
+            }
+        }
+    }
+
+}
